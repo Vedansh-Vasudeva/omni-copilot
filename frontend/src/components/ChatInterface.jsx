@@ -20,8 +20,9 @@ const ChatInterface = () => {
     setIsLoading(true);
 
     try {
-        // Assume default FastAPI running on localhost:8000
-      const response = await fetch('http://localhost:8000/api/chat', {
+      // Use environment variable for production deployment, fallback to localhost
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: 'default_user', message: input }),
